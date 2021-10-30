@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/charactersFragment">
+
+    <fragment
+        android:id="@+id/charactersFragment"
+        android:name="com.davidmendozamartinez.technicaltest.rickandmorty.ui.screen.characters.CharactersFragment"
+        tools:layout="@layout/fragment_characters">
+        <argument
+            android:name="section"
+            android:defaultValue="ALL"
+            app:argType="com.davidmendozamartinez.technicaltest.rickandmorty.ui.screen.characters.Section" />
+        <action
+            android:id="@+id/action_charactersFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.davidmendozamartinez.technicaltest.rickandmorty.ui.screen.detail.DetailFragment"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="character"
+            app:argType="com.davidmendozamartinez.technicaltest.rickandmorty.domain.model.Character" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.davidmendozamartinez.technicaltest.rickandmorty.ui.screen.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_charactersFragment"
+        app:destination="@+id/charactersFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@+id/navigation_graph"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_searchFragment"
+        app:destination="@+id/searchFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@+id/navigation_graph"
+        app:popUpToInclusive="true" />
+</navigation>
