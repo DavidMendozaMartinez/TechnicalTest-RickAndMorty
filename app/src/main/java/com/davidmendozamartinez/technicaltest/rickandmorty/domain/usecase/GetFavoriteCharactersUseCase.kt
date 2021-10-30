@@ -4,7 +4,10 @@ import androidx.paging.PagingData
 import com.davidmendozamartinez.technicaltest.rickandmorty.domain.model.Character
 import com.davidmendozamartinez.technicaltest.rickandmorty.domain.repository.CharacterRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetFavoriteCharactersUseCase(private val repository: CharacterRepository) {
+class GetFavoriteCharactersUseCase @Inject constructor(
+    private val repository: CharacterRepository
+) {
     fun invoke(): Flow<PagingData<Character>> = repository.getFavoriteCharacters()
 }
