@@ -1,9 +1,13 @@
 package com.davidmendozamartinez.technicaltest.rickandmorty.data.source.remote
 
+import com.davidmendozamartinez.technicaltest.rickandmorty.data.source.remote.model.CharacterRemote
+import com.davidmendozamartinez.technicaltest.rickandmorty.data.source.remote.model.response.ListResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 fun createRickAndMortyApiService(): RickAndMortyApiService {
     val logger = HttpLoggingInterceptor()
@@ -22,4 +26,16 @@ fun createRickAndMortyApiService(): RickAndMortyApiService {
     return retrofit.create(RickAndMortyApiService::class.java)
 }
 
-interface RickAndMortyApiService
+interface RickAndMortyApiService {
+
+    @GET(Routes.CHARACTER)
+    suspend fun getCharacters(
+        @Query("page") page: Int = 1
+    ): ListResponse<CharacterRemote>
+
+    @GET(Routes.CHARACTER)
+    suspend fun searchCharacters(
+        @Query("query") query: String,
+        @Query("page") page: Int = 1
+    ): ListResponse<CharacterRemote>
+}
