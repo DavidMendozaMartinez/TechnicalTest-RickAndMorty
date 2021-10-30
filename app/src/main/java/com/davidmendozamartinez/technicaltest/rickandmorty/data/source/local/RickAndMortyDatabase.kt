@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.davidmendozamartinez.technicaltest.rickandmorty.data.source.local.dao.CharacterDao
 import com.davidmendozamartinez.technicaltest.rickandmorty.data.source.local.model.CharacterLocal
 
 @Database(
@@ -12,6 +13,8 @@ import com.davidmendozamartinez.technicaltest.rickandmorty.data.source.local.mod
     exportSchema = false
 )
 abstract class RickAndMortyDatabase : RoomDatabase() {
+
+    abstract fun characterDao(): CharacterDao
 
     companion object {
         @Volatile
