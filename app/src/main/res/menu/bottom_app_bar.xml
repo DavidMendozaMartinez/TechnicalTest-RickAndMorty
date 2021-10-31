@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/light"
+        android:title="@string/menu_light"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/dark"
+        android:title="@string/menu_dark"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/system_default"
+        android:title="@string/menu_system_default"
+        app:showAsAction="never" />
+</menu>

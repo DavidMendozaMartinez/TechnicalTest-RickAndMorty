@@ -5,13 +5,12 @@ import com.davidmendozamartinez.technicaltest.rickandmorty.data.source.local.mod
 import com.davidmendozamartinez.technicaltest.rickandmorty.data.source.remote.model.CharacterRemote
 import com.davidmendozamartinez.technicaltest.rickandmorty.domain.model.Character
 import com.davidmendozamartinez.technicaltest.rickandmorty.domain.model.Location
-import com.davidmendozamartinez.technicaltest.rickandmorty.domain.model.Status
 
 object CharacterMapper {
     fun CharacterRemote.toDomain(): Character = Character(
         id,
         name,
-        Status.valueOf(status),
+        status,
         species,
         location.toDomain(),
         image
@@ -20,7 +19,7 @@ object CharacterMapper {
     fun CharacterLocal.toDomain(): Character = Character(
         id,
         name,
-        Status.valueOf(status),
+        status,
         species,
         Location(location),
         image
@@ -29,7 +28,7 @@ object CharacterMapper {
     fun Character.toLocal(): CharacterLocal = CharacterLocal(
         id,
         name,
-        status.name,
+        status,
         species,
         location.name,
         image

@@ -20,10 +20,12 @@ class DetailViewModel @Inject constructor(
     private val _state: MutableLiveData<State> = MutableLiveData(LOADING)
 
     private val _character: MutableLiveData<Character> = MutableLiveData()
+    val character: LiveData<Character> get() = _character
 
     private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData()
-    private val isFavorite: LiveData<Boolean> get() = _isFavorite
+    val isFavorite: LiveData<Boolean> get() = _isFavorite
 
+    val isLoadingStateVisible = Transformations.map(_state) { it == LOADING }
     val isButtonAddToFavoritesVisible = Transformations.map(isFavorite) { it == false }
     val isButtonRemoveFromFavoritesVisible = Transformations.map(isFavorite) { it == true }
 
@@ -41,7 +43,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun addToFavorites(character: Character) {
+    fun onAddToFavoritesButtonClicked(character: Character) {
         _state.value = LOADING
 
         viewModelScope.launch {
@@ -51,7 +53,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun removeFromFavorites(character: Character) {
+    fun onRemoveFromFavoritesButtonClicked(character: Character) {
         _state.value = LOADING
 
         viewModelScope.launch {

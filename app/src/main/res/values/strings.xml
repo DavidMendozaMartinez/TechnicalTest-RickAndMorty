@@ -1,3 +1,39 @@
 <resources>
     <string name="app_name">RickAndMorty</string>
+
+    <!-- Navigation drawer item titles -->
+    <string name="nav_drawer_all">All</string>
+    <string name="nav_drawer_favorites">Favorites</string>
+
+    <!-- Menu item titles -->
+    <string name="menu_light">Light theme</string>
+    <string name="menu_dark">Dark theme</string>
+    <string name="menu_system_default">System default</string>
+
+    <!-- MainActivity -->
+    <string name="main_fab_search_content_description">Search character</string>
+
+    <!-- CharactersFragment -->
+    <string name="characters_empty_state_title">No characters found</string>
+    <string name="characters_empty_state_message">Try searching by name and add the character you like the most to favorites</string>
+
+    <!-- DetailFragment -->
+    <string name="detail_transition_name" translatable="false">character_detail</string>
+    <string name="detail_label_overview">Overview</string>
+    <string name="detail_button_add_to_favorites">Add to favorites</string>
+    <string name="detail_button_remove_from_favorites">Remove from favorites</string>
+
+    <!-- SearchFragment -->
+    <string name="search_hint_search">Search character</string>
+    <string name="search_button_clear_content_description">Clear search</string>
+    <string name="search_empty_state_title">No results found</string>
+    <string name="search_empty_state_message">Try adjusting your search</string>
+
+    <!-- ItemCharacter -->
+    <string name="item_character_card_transition_name" translatable="false">character_card_%1$s</string>
+
+    <!-- IncludeErrorState -->
+    <string name="include_error_state_title">An error has occurred</string>
+    <string name="include_error_state_message">Please check your connection or try again later</string>
+    <string name="include_error_state_retry">Retry</string>
 </resources>

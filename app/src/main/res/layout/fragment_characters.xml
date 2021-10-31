@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.screen.characters.CharactersFragment" />
+    tools:context=".ui.screen.characters.CharactersFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.davidmendozamartinez.technicaltest.rickandmorty.ui.screen.characters.CharactersViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:visible="@{viewModel.isLoadingStateVisible()}"
+                tools:visibility="gone" />
+
+            <include
+                android:id="@+id/listContainer"
+                layout="@layout/include_list_characters"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:visible="@{viewModel.isSuccessStateVisible()}" />
+
+            <include
+                android:id="@+id/emptyState"
+                layout="@layout/fragment_characters_empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:visible="@{viewModel.isEmptyStateVisible()}"
+                tools:visibility="gone" />
+
+            <include
+                android:id="@+id/errorState"
+                layout="@layout/include_error_state"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:visible="@{viewModel.isErrorStateVisible()}"
+                tools:visibility="gone" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

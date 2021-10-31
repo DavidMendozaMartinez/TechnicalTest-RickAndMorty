@@ -1,6 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.screen.detail.DetailFragment" />
+    tools:context=".presentation.ui.details.DetailsFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.davidmendozamartinez.technicaltest.rickandmorty.ui.screen.detail.DetailViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:transitionName="@string/detail_transition_name"
+        app:cardCornerRadius="0dp">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/detailsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:visible="@{viewModel.isLoadingStateVisible()}"
+                        tools:visibility="gone" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/poster"
+                        android:layout_width="300dp"
+                        android:layout_height="0dp"
+                        android:layout_marginVertical="32dp"
+                        app:layout_constraintDimensionRatio="H,2:3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:importantForAccessibility="no"
+                            android:scaleType="centerCrop"
+                            app:imageFromUrl="@{viewModel.character.image}"
+                            app:loadingPlaceholder="@{viewModel.character}"
+                            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="48dp"
+                        android:layout_marginTop="24dp"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="@{ viewModel.character.name }"
+                        android:textAppearance="?attr/textAppearanceHeadline5"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/poster"
+                        app:loadingPlaceholder="@{viewModel.character}"
+                        tools:text="Morty Smith" />
+
+                    <TextView
+                        android:id="@+id/data"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="48dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="48dp"
+                        android:gravity="center"
+                        android:text="@{viewModel.character.data}"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/title"
+                        app:loadingPlaceholder="@{ viewModel.character}"
+                        tools:text="Human · Alive" />
+
+                    <TextView
+                        android:id="@+id/location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:layout_marginBottom="80dp"
+                        android:drawablePadding="8dp"
+                        android:text="@{viewModel.character.location.name}"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        app:drawableStartCompat="@drawable/fragment_detail_location"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/data"
+                        app:layout_constraintStart_toStartOf="@id/data"
+                        app:layout_constraintTop_toBottomOf="@id/data"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:text="Earth" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/buttonAddToFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:onClick="@{() -> viewModel.onAddToFavoritesButtonClicked(viewModel.character)}"
+                android:text="@string/detail_button_add_to_favorites"
+                app:icon="@drawable/fragment_detail_favorite"
+                app:visible="@{viewModel.isButtonAddToFavoritesVisible()}"
+                tools:visibility="visible" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/buttonRemoveFromFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:onClick="@{() -> viewModel.onRemoveFromFavoritesButtonClicked(viewModel.character)}"
+                android:text="@string/detail_button_remove_from_favorites"
+                app:icon="@drawable/fragment_detail_remove_favorite"
+                app:visible="@{viewModel.isButtonRemoveFromFavoritesVisible()}"
+                tools:visibility="gone" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

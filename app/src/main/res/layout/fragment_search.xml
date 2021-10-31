@@ -1,6 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.screen.search.SearchFragment" />
+    tools:context=".presentation.ui.search.SearchFragment">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.davidmendozamartinez.technicaltest.rickandmorty.ui.screen.search.SearchViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:paddingHorizontal="8dp"
+                app:contentInsetStartWithNavigation="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/ic_arrow_back">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editTextSearch"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/searcher_height"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="@string/search_hint_search"
+                        android:imeOptions="actionSearch"
+                        android:importantForAutofill="no"
+                        android:inputType="textNoSuggestions" />
+
+                    <ImageButton
+                        android:layout_width="@dimen/searcher_height"
+                        android:layout_height="@dimen/searcher_height"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/search_button_clear_content_description"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:onClick='@{ () -> editTextSearch.setText("") }'
+                        android:padding="16dp"
+                        android:src="@drawable/fragment_search_remove" />
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/white"
+                android:backgroundTint="@color/material_on_surface_stroke"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:visible="@{ viewModel.isLoadingStateVisible() }"
+                tools:visibility="visible" />
+
+            <include
+                android:id="@+id/listContainer"
+                layout="@layout/include_list_characters"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:visible="@{viewModel.isSuccessStateVisible()}" />
+
+            <include
+                android:id="@+id/emptyState"
+                layout="@layout/fragment_search_empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginVertical="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider"
+                app:visible="@{viewModel.isEmptyStateVisible()}"
+                tools:visibility="gone" />
+
+            <include
+                android:id="@+id/errorState"
+                layout="@layout/include_error_state"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:visible="@{viewModel.isErrorStateVisible()}"
+                tools:visibility="gone" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

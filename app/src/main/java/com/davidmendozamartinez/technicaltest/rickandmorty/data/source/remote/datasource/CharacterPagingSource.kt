@@ -19,7 +19,7 @@ class CharacterPagingSource(
         val page = params.key ?: RICK_AND_MORTY_API_STARTING_PAGE_INDEX
 
         return try {
-            val response = if (query.isBlank()) service.getCharacters(page)
+            val response = if (query.isEmpty()) service.getCharacters(page)
             else service.searchCharacters(query, page)
 
             val data = response.results.map { it.toDomain() }

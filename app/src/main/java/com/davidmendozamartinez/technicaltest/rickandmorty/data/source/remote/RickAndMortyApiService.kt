@@ -35,7 +35,7 @@ interface RickAndMortyApiService {
 
     @GET(Routes.CHARACTER)
     suspend fun searchCharacters(
-        @Query("query") query: String,
+        @Query("name") query: String,
         @Query("page") page: Int = 1
     ): ListResponse<CharacterRemote>
 }
